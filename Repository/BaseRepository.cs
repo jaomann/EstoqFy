@@ -26,7 +26,7 @@ namespace EstoqFy.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
+        public async Task<List<T>> GetAllAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
         public async Task UpdateAsync(T entity)
         {

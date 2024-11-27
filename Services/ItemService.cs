@@ -13,6 +13,9 @@ namespace EstoqFy.Services
         }
 
         public int Count(string EAN) => _repository.Count(EAN);
-        
+
+        public Task<bool> ExistsAsync(string EAN, Guid user) => _repository.ExistsAsync(EAN, user);
+
+        public Task<Item> GetByEANAsync(string EAN, Guid user) => _repository.GetByEANAsync(EAN, user);
     }
 }

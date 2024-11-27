@@ -17,6 +17,8 @@ namespace EstoqFy.Repository
         public int Count(string EAN) => _context.Set<Item>()
             .FirstOrDefault(x => x.EAN == EAN && !x.IsDeleted).Count;
 
-        public Task<bool> ExistsAsync(string EAN) => await _context.Set<Item>().AnyAsync(x => x.EAN == EAN && !x.IsDeleted);
+        public async Task<bool> ExistsAsync(string EAN, Guid user) => await _context.Set<Item>().AnyAsync(x => x.EAN == EAN && x.UserId == user && !x.IsDeleted);
+
+        public async Task<Item> GetByEANAsync(string EAN, Guid user) => await _context.Set<Item>().FirstOrDefaultAsync(x => x.EAN == EAN && x.UserId == user && !x.IsDeleted);
     }
 }
