@@ -5,6 +5,7 @@ export default {
   target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
+  logLevel: 'debug', // Pode ser 'info', 'warn', 'error', 'debug'
   head: {
     titleTemplate: '%s - Estoqfy',
     title: 'Estoqfy',

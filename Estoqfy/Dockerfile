@@ -1,4 +1,4 @@
-# Dockerfile para o frontend Vue.js
+# Estágio de build
 FROM node:18 AS build
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -6,7 +6,10 @@ RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Estágio final
+FROM node:18 AS final
+WORKDIR /app
+RUN yarn global add http-server
+COPY --from=build /app/.output /app/.output
+EXPOSE 3000
+CMD ["http-server", ".output/public", "-p", "3000"]

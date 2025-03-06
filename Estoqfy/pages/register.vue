@@ -84,7 +84,7 @@
     methods: {
       async createUser() {
         console.log(this.user); 
-        const response = await fetch('https://localhost:7182/api/user', {
+        const response = await fetch('https://localhost:5000/api/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

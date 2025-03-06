@@ -89,7 +89,7 @@
         async createItem() {
             this.item.userId = this.getCookie("userId");
             console.log(this.item);
-            const response = await fetch(`https://localhost:7182/api/item`, {
+            const response = await fetch(`https://localhost:5000/api/item`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

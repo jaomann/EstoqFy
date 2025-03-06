@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     async getItem(id) {
-      const response = await fetch(`https://localhost:32769/api/item?id=${id}`);
+      const response = await fetch(`https://localhost:5000/api/item?id=${id}`);
       if (response.ok) {
         const data = await response.json();
         this.item = data;
@@ -89,7 +89,7 @@ export default {
     },
 
     async updateItem() {
-      const response = await fetch(`https://localhost:32769/api/item?EAN=${this.item.ean}&userId=${this.item.userId}`, {
+      const response = await fetch(`https://localhost:5000/api/item?EAN=${this.item.ean}&userId=${this.item.userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

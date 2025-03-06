@@ -1,24 +1,15 @@
 ---
-version: "3.8"
 services:
   frontend:
-    image: estoqfy-frontend
     build:
       context: ./Estoqfy
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 80:3000
     networks:
       - api-network
-    depends_on:
-      - api
-    logging:
-      driver: json-file
-      options:
-        max-size: 10m
-        max-file: "3"
+    restart: always
   api:
-    image: estoqfy-api
     build:
       context: ./EstoqfyApi
       dockerfile: Dockerfile
@@ -26,26 +17,14 @@ services:
       - 5000:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=estoqfy_db;User
-        Id=user;Password=password
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=${DB_NAME};User
+        Id=${DB_USER};Password=${DB_PASSWORD}
     networks:
       - api-network
     depends_on:
-      - db
-    healthcheck:
-      test:
-        - CMD
-        - curl
-        - -f
-        - http://localhost:80/health
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    logging:
-      driver: json-file
-      options:
-        max-size: 10m
-        max-file: "3"
+      db:
+        condition: service_healthy
+    restart: always
   db:
     image: mariadb:latest
     environment:
@@ -53,15 +32,23 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3306:3306
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
       - api-network
-    logging:
-      driver: json-file
-      options:
-        max-size: 10m
-        max-file: "3"
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+      interval: 10s
+      timeout: 20s
+      retries: 10
+    restart: always
 networks:
   api-network:
     driver: bridge
