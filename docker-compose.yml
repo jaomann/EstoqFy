@@ -1,5 +1,5 @@
-version: '3.8'
-
+---
+version: "3.8"
 services:
   frontend:
     image: estoqfy-frontend
@@ -7,42 +7,45 @@ services:
       context: ./Estoqfy
       dockerfile: Dockerfile
     ports:
-      - "80:80"  # Expõe a porta 80 do container na porta 80 do host
+      - 80:80
     networks:
       - api-network
     depends_on:
       - api
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-size: "10m"
+        max-size: 10m
         max-file: "3"
-
   api:
     image: estoqfy-api
     build:
       context: ./EstoqfyApi
       dockerfile: Dockerfile
     ports:
-      - "5000:80"  # Expõe a porta 80 do container na porta 5000 do host
+      - 5000:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=estoqfy_db;User Id=user;Password=password
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=estoqfy_db;User
+        Id=user;Password=password
     networks:
       - api-network
     depends_on:
       - db
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:80/health
       interval: 30s
       timeout: 10s
       retries: 3
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-size: "10m"
+        max-size: 10m
         max-file: "3"
-
   db:
     image: mariadb:latest
     environment:
@@ -55,14 +58,12 @@ services:
     networks:
       - api-network
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-size: "10m"
+        max-size: 10m
         max-file: "3"
-
 networks:
   api-network:
     driver: bridge
-
 volumes:
-  mariadb_data:
+  mariadb_data: null
