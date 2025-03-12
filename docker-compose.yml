@@ -6,7 +6,7 @@ services:
       context: ./Estoqfy
       dockerfile: Dockerfile
     ports:
-      - 3000:3000 
+      - 3000:3000
     depends_on:
       - api
     volumes:
@@ -31,7 +31,6 @@ services:
     restart: always
     env_file:
       - .env
-
   db:
     image: mariadb:latest
     container_name: db-estoqfy
@@ -47,23 +46,21 @@ services:
     restart: always
     env_file:
       - .env
-
   nginx:
     build:
-        context: ./Nginx
-        dockerfile: Dockerfile
+      context: ./Nginx
+      dockerfile: Dockerfile
     container_name: nginx-estoqfy
     ports:
-    - "80:80"   # HTTP
-    - "443:443" # HTTPS
+      - 80:80
+      - 443:443
     volumes:
-    - /home/ubuntu/EstoqFy/Nginx/conf.d:/etc/nginx/conf.d  # Monta o diretório de configuração
-    - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt  # Certificado SSL
-    - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key  # Chave SSL
+      - /home/ubuntu/EstoqFy/Nginx/conf.d:/etc/nginx/conf.d
+      - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
+      - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
     depends_on:
-    - frontend
-    - api
+      - frontend
+      - api
     restart: always
-
 volumes:
-  mariadb_data:
+  mariadb_data: null
