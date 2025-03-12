@@ -116,7 +116,7 @@ export default {
       this.filteredItems = this.items;
     },
     async getItems() {
-      const response = await fetch(`https://localhost:5000/api/items?userId=${this.getCookie("userId")}`);
+      const response = await fetch(`/api/items?userId=${this.getCookie("userId")}`);
       if (response.ok) {
         const data = await response.json();
         return data.map(item => {
@@ -164,7 +164,7 @@ export default {
       });
     },
     async fetchDelete(id) {
-      const response = await fetch(`https://localhost:5000/api/item?id=${id}`, { method: 'DELETE' });
+      const response = await fetch(`/api/item?id=${id}`, { method: 'DELETE' });
       return response.ok;
     },
   },

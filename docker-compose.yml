@@ -1,29 +1,38 @@
 ---
 services:
   frontend:
+    container_name: front-estoqfy
     build:
       context: ./Estoqfy
       dockerfile: Dockerfile
     ports:
-      - 80:3000
-    networks:
-      - api-network
-    restart: always
+      - 3000:3000 
+    depends_on:
+      - api
+    volumes:
+      - ./Estoqfy:/app
+    environment:
+      - NUXT_HOST=0.0.0.0
+      - NUXT_PORT=3000
   api:
     build:
       context: ./EstoqfyApi
       dockerfile: Dockerfile
+    container_name: api-estoqfy
     ports:
-      - 5000:80
+      - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=${DB_NAME};User
-        Id=${DB_USER};Password=${DB_PASSWORD}
-    networks:
-      - api-network
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD}
+    depends_on:
+      - db
     restart: always
+    env_file:
+      - .env
+
   db:
     image: mariadb:latest
+    container_name: db-estoqfy
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
@@ -33,11 +42,21 @@ services:
       - 3306:3306
     volumes:
       - mariadb_data:/var/lib/mysql
-    networks:
-      - api-network
     restart: always
-networks:
-  api-network:
-    driver: bridge
+    env_file:
+      - .env
+
+  nginx:
+    build:
+      context: ./Nginx
+      dockerfile: Dockerfile
+    container_name: nginx-estoqfy
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
+      - api
+    restart: always
+
 volumes:
-  mariadb_data: null
+  mariadb_data:
