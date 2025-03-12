@@ -1,3 +1,4 @@
+using DotNetEnv;
 using EstoqFy.Core.Contracts.Repository;
 using EstoqFy.Core.Contracts.Services;
 using EstoqFy.Database;
