@@ -12,7 +12,7 @@ namespace EstoqFy.Controllers
         {
             _itemService = itemService;
         }
-        [HttpPost("api/item")]
+        [HttpPost("item")]
         public async Task<IActionResult> CreateAsync([FromBody] Item item)
         {
             try
@@ -32,7 +32,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPatch("api/item/count")]
+        [HttpPatch("item/count")]
         public async Task<IActionResult> ModifyCountAsync(int count, Guid id)
         {
             try
@@ -48,7 +48,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("api/item")]
+        [HttpPut("item")]
         public async Task<IActionResult> UpdateAsync([FromBody] Item item)
         {
             try
@@ -66,7 +66,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("api/item")]
+        [HttpDelete("item")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             try
@@ -82,7 +82,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("api/item")]
+        [HttpGet("item")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             try
@@ -97,7 +97,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("api/items")]
+        [HttpGet("items")]
         public async Task<IActionResult> GetAllAsync(Guid userId)
         {
             try

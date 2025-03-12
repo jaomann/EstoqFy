@@ -13,7 +13,7 @@ namespace EstoqFy.Controllers
             _authService = authService;
             _userService = userService;
         }
-        [HttpPost("api/auth/login")]
+        [HttpPost("auth/login")]
         public async Task<IActionResult> Login([FromBody]UserLogin user)
         {
             try

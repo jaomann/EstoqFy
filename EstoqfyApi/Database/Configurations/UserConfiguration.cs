@@ -8,6 +8,7 @@ namespace EstoqFy.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("user");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Username).IsRequired();
             builder.Property(x => x.Email).IsRequired();

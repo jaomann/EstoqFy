@@ -8,6 +8,7 @@ namespace EstoqFy.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<Item> builder)
         {
+            builder.ToTable("item");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.EAN).IsRequired();
             builder.Property(x => x.Name).IsRequired();

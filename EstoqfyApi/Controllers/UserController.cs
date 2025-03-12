@@ -13,7 +13,7 @@ namespace EstoqFy.Controllers
             _userService = userService;
             _authService = authService;
         }
-        [HttpPost("api/user")]
+        [HttpPost("user")]
         public async Task<IActionResult> CreateAsync([FromBody] User user)
         {
             try
@@ -33,7 +33,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("api/user")]
+        [HttpPut("user")]
         public async Task<IActionResult> UpdateAsync([FromBody] User user)
         {
             try
@@ -51,7 +51,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("api/user")]
+        [HttpDelete("user")]
         public async Task<IActionResult> DeleteAsync([FromBody] User user)
         {
             try
@@ -69,7 +69,7 @@ namespace EstoqFy.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("api/user")]
+        [HttpGet("user")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             try

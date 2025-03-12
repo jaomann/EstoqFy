@@ -14,8 +14,10 @@ namespace EstoqFy
         {
 
             var builder = WebApplication.CreateBuilder(args);
+            Env.Load();
+            var connectionString = $"Server=db;Port=3306;Database={Env.GetString("DB_NAME")};User Id={Env.GetString("DB_USER")};Password={Env.GetString("DB_PASSWORD")}";
             builder.Services.AddDbContext<Context>(opt =>
-                opt.UseMySql(builder.Configuration.GetConnectionString("cnMySql"),
+                opt.UseMySql(connectionString,
                     new MySqlServerVersion(new Version(8, 0, 11))));
             builder.Services.AddCors(options =>
             {
