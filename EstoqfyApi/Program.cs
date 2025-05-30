@@ -38,7 +38,10 @@ namespace EstoqFy
             builder.Services.AddScoped<IItemService, ItemService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-
+            // Configuração do logging
+            builder.Logging.AddConsole();
+            builder.Logging.AddDebug();
+            builder.Logging.SetMinimumLevel(LogLevel.Trace);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -54,6 +57,19 @@ namespace EstoqFy
 
 
             app.MapControllers();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<Context>();
+                try
+                {
+                    context.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao inicializar banco: {ex.Message}");
+                }
+            }
 
             app.Run();
         }
