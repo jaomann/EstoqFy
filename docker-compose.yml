@@ -9,8 +9,6 @@ services:
       - 3000:3000
     depends_on:
       - api
-    volumes:
-      - ./Estoqfy:/app
     environment:
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
